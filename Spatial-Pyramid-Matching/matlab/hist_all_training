@@ -1,0 +1,17 @@
+load('../data/traintest.mat','all_imagenames','mapping');
+
+
+l = length(all_imagenames);
+source = '../data/';
+target = '../data/'; 
+dictionarySize=200;
+layerNum=3;
+histograms=[];
+for i=1:l
+    wordMapload = strrep(all_imagenames{i},'.jpg','.mat');
+    load(wordMapload);
+    [h] = getImageFeaturesSPM(layerNum, wordMap, dictionarySize);
+    histograms=[histograms;h];
+end
+
+save([target,'train_features.mat'],'histograms');
